@@ -1,5 +1,22 @@
 services:
   nginx:
-    image: nginx:1.24.0-bullseye
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    volumes:
+    - ./laravel/:/var/www/html/
     ports:
       - 80:80
+    networks:
+      - internal
+
+  php:
+    build:
+      context: .
+      dockerfile: laravel/Dockerfile
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
