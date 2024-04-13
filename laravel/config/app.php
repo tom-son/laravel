@@ -5,6 +5,11 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+    // TODO Thompson - these settings look interesting
+    // https://laravel.com/docs/11.x#environment-based-configuration
+    // https://laravel.com/docs/11.x/configuration#environment-configuration
+    // https://laravel.com/docs/11.x/deployment#debug-mode
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
