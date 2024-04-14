@@ -1,3 +1,5 @@
 FROM php:8.3.6-fpm-bullseye
 
-COPY laravel/ /var/www/html/
+RUN chown -R www-data:www-data /var/www/html
+
+COPY --chown=www-data:www-data laravel/ /var/www/html/
