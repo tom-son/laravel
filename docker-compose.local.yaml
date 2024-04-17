@@ -3,8 +3,6 @@ services:
     build:
       context: .
       dockerfile: nginx/Dockerfile
-    volumes:
-    - ./laravel/:/var/www/html/
     ports:
       - 80:80
     networks:
@@ -14,6 +12,8 @@ services:
     build:
       context: .
       dockerfile: laravel/Dockerfile
+    volumes:
+      - ./laravel/:/var/www/html/
     networks:
       - internal
 
