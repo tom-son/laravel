@@ -1,0 +1,20 @@
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - internal
+
+  php:
+    build:
+      context: .
+      dockerfile: laravel/Dockerfile
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
