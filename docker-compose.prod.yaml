@@ -2,7 +2,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: react-vite/nginx/Dockerfile
+      dockerfile: react-vite/Dockerfile
     ports:
       - 80:80
     networks:
