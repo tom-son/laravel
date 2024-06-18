@@ -1,8 +1,8 @@
 services:
   nginx:
     build:
-      context: .
-      dockerfile: react-vite/Dockerfile
+      context: ./react-vite
+      dockerfile: Dockerfile
     ports:
       - 80:80
     networks:
@@ -10,8 +10,8 @@ services:
 
   php:
     build:
-      context: .
-      dockerfile: laravel/Dockerfile
+      context: ./laravel
+      dockerfile: Dockerfile
     networks:
       - internal
 
