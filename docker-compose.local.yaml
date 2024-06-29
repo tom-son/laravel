@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./react-vite/dist/:/var/www/html/
+    environment:
+      - NGINX_HOST=php
     ports:
       - 80:80
     networks:

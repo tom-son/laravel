@@ -1,0 +1,26 @@
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include mime.types;
+
+    server {
+        listen 0.0.0.0:80;
+
+        location / {
+            root /var/www/html/;
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location ~ \.php$ {
+            root /var/www/html/public;
+            include fastcgi_params;
+            # using localhost - https://aws.amazon.com/de/blogs/compute/task-networking-in-aws-fargate/
+            fastcgi_pass ${NGINX_HOST}:9000;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+        }
+    }
+}
