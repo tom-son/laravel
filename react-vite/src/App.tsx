@@ -1,35 +1,98 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import {
+    AppBar,
+    Box,
+    Button,
+    Container,
+    Toolbar,
+    Typography,
+} from "@mui/material";
+import OrdersPage from "./orders/OrdersPage";
+import InvoiceExplorerPage from "./invoices/InvoiceExplorerPage";
+import CustomersPage from "./customers/CustomersPage";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+export interface GlobalState {
+    selectedCustomerID: number | null;
+    setSelectedCustomerID: (customerID: number | null) => void;
+    setSelectedPageKey: (pageKey: string) => void;
 }
 
-export default App
+export const CREATE_INVOICE_PAGE_KEY = "createInvoice";
+export const INVOICES_PAGE_KEY = "invoices";
+const pageDescriptions = [
+    {
+        key: INVOICES_PAGE_KEY,
+        label: "Invoices",
+        renderPage: (props: GlobalState) => <InvoiceExplorerPage {...props} />,
+    },
+    {
+        key: CREATE_INVOICE_PAGE_KEY,
+        label: "Create Invoice",
+        hiddenToolbar: true,
+        renderPage: (props: GlobalState) => <OrdersPage {...props} />,
+    },
+    {
+        key: "customers",
+        label: "Customers",
+        renderPage: () => <CustomersPage />,
+    },
+];
+
+function App() {
+    const [selectedPageKey, setSelectedPageKey] = React.useState(
+        pageDescriptions[0].key,
+    );
+
+    const currentPageDescription = pageDescriptions.find(
+        (pageDescription) => pageDescription.key === selectedPageKey,
+    );
+
+    const [selectedCustomerID, setSelectedCustomerID] = React.useState<
+        number | null
+    >(null);
+
+    const globalState: GlobalState = {
+        selectedCustomerID,
+        setSelectedCustomerID,
+        setSelectedPageKey,
+    };
+
+    return (
+        <Box>
+            <AppBar position="static">
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters sx={{ px: 14 }}>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ display: { xs: "none", sm: "block" } }}
+                        >
+                            Do It Transport
+                        </Typography>
+
+                        <Box sx={{ flexGrow: 1 }} />
+
+                        <Box sx={{ display: { xs: "flex" } }}>
+                            {pageDescriptions
+                                .filter((tab) => !tab.hiddenToolbar)
+                                .map((page) => (
+                                    <Button
+                                        key={page.key}
+                                        onClick={() => setSelectedPageKey(page.key)}
+                                        sx={{ my: 2, color: "white", display: "block" }}
+                                    >
+                                        {page.label}
+                                    </Button>
+                                ))}
+                        </Box>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+
+            {currentPageDescription?.renderPage(globalState)}
+        </Box>
+    );
+}
+
+export default App;
