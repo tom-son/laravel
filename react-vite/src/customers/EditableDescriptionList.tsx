@@ -1,5 +1,5 @@
 import {Box, Button, IconButton, List, ListItem, TextField} from '@mui/material';
-import React, {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import {formatToCurrency} from "../utilities/formatter";
 import Description from "../types/Description";

@@ -4,8 +4,6 @@ import requestHandler from "./requestHandler";
 import { Status } from "../types/Status";
 
 class OrdersApi {
-  private static ordersKey = "orders";
-
   private static async getOrdersFromDB(): Promise<Order[]> {
     const result = await requestHandler.get("/invoices");
 

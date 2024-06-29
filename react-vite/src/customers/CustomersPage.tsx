@@ -108,7 +108,7 @@ function CustomersPage() {
                 </div>
               );
             }}
-            getDetailPanelHeight={({ row }) => "auto"}
+            getDetailPanelHeight={() => "auto"}
           />
 
           {formDialogVisibility && (

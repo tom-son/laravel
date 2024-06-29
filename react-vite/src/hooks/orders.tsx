@@ -1,8 +1,7 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, DefaultError } from "@tanstack/react-query";
 import Handlers, { queryClient } from "../api/handlers";
 import OrdersApi from "../api/OrdersApi";
 import Order from "../types/Order";
-import { DefaultError } from "@tanstack/query-core/build/modern/index";
 
 export function useOrders() {
   const customerQuery = useQuery({

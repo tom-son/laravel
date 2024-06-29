@@ -1,6 +1,6 @@
 import Order from "../types/Order";
 import OrderItem from "../types/OrderItem";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCustomer } from "../hooks/customer";
 import ErrorComponent from "../components/ErrorComponent";
 import {

@@ -1,4 +1,3 @@
-import React from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useCustomerDescriptions } from "../../hooks/customer";
 import Description from "../../types/Description";
@@ -27,7 +26,8 @@ function DescriptionSelectionField(props: DescriptionSelectionFieldProps) {
         </MenuItem>
       ));
 
-  function onFieldChange(event: any, child: any) {
+    // @ts-ignore
+    function onFieldChange(event: any, child: any) {
     props.onChange(child.props.value);
   }
 
