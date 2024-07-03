@@ -39,13 +39,8 @@ Route::get('/user', function (Request $request) {
     );
 });
 
-Route::get('customer', function () {
-    Customer::query()->create([
-        'abn' => 'Test',
-        'businessName' => 'Test',
-        'email' => 'Test',
-        'name' => 'Test',
-    ]);
-
-    dd(Customer::all());
+Route::prefix('customers')->group(function() {
+    Route::get('/', function () {
+        return response()->json(Customer::all());
+    });
 });
