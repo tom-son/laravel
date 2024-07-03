@@ -120,11 +120,10 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/routing" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/css-selector" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/storage/app" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/storage/framework" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-  <component name="SonarLintModuleSettings">
-    <option name="uniqueId" value="9fd41d27-79b5-4152-9b29-d6f19612c435" />
   </component>
 </module>
