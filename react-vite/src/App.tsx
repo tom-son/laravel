@@ -62,15 +62,6 @@ function App() {
             <AppBar position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters sx={{ px: 14 }}>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ display: { xs: "none", sm: "block" } }}
-                        >
-                            Do It Transport
-                        </Typography>
-
                         <Box sx={{ flexGrow: 1 }} />
 
                         <Box sx={{ display: { xs: "flex" } }}>
