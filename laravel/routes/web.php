@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Customer;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,5 +43,11 @@ Route::get('/user', function (Request $request) {
 Route::prefix('customers')->group(function() {
     Route::get('/', function () {
         return response()->json(Customer::all());
+    });
+});
+
+Route::prefix('invoices')->group(function() {
+    Route::get('/', function () {
+        return response()->json(Invoice::all());
     });
 });
