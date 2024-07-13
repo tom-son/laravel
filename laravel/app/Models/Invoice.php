@@ -9,5 +9,6 @@ class Invoice extends Model
 {
     use HasFactory;
 
+    protected $connection = 'app_database';
     protected $table = 'invoice';
 }
