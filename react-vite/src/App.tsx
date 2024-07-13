@@ -5,7 +5,6 @@ import {
     Button,
     Container,
     Toolbar,
-    Typography,
 } from "@mui/material";
 import OrdersPage from "./orders/OrdersPage";
 import InvoiceExplorerPage from "./invoices/InvoiceExplorerPage";
