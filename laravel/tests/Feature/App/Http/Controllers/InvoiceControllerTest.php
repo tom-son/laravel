@@ -18,7 +18,6 @@ class InvoiceControllerTest extends TestCase
         $invoice->customerID = '1';
         $invoice->status = 'New';
         $invoice->save();
-        Invoice::all()->dump();
 
         // when
         $response = $this->get('/invoices');
