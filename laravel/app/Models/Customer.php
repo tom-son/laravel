@@ -15,8 +15,10 @@ class Customer extends Model
 {
     use HasFactory;
 
+    public const TABLE = 'customer';
+
     protected $connection = 'app_database';
-    protected $table = 'customer';
+    protected $table = self::TABLE;
     protected $fillable = [
         'abn',
         'businessName',
