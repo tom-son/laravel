@@ -42,6 +42,7 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('customers')->group(function() {
     Route::get('/', [CustomerController::class,'getCustomers']);
+    Route::get('/{customer_id}/routes', [CustomerController::class,'getCustomerRoutes']);
 });
 
 Route::prefix('invoices')->group(function() {
