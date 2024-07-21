@@ -12,7 +12,7 @@ import {
 import { DataGridPro } from "@mui/x-data-grid-pro";
 import Customer from "../types/Customer";
 import CreateCustomerFormDialog from "./CreateCustomerFormDialog";
-import { useCustomers } from "../hooks/customer";
+import {useCustomers} from "../hooks/customer";
 import EditableDescriptionList from "./EditableDescriptionList";
 import Description from "../types/Description";
 import CustomersApi from "../api/CustomersApi";
@@ -86,28 +86,7 @@ function CustomersPage() {
             loading={customersQuery.isFetching}
             rows={customersQuery.data || []}
             columns={columns}
-            getDetailPanelContent={({ row }) => {
-              return (
-                <div>
-                  <Card sx={{ margin: 1 }}>
-                    <CardContent>
-                      <Typography gutterBottom variant="h6" component="div">
-                        Email:
-                      </Typography>
-                      {row.email}
-                      <Typography variant="h6" component="div">
-                        Descriptions:
-                      </Typography>
-                      <EditableDescriptionList
-                          onSaveDescription={(description) => addCustomerDescription(row.id, description)}
-                          onDeleteDescription={(description) => deleteCustomerDescription(row.id, description)}
-                          descriptions={row.descriptions}
-                      />
-                    </CardContent>
-                  </Card>
-                </div>
-              );
-            }}
+            getDetailPanelContent={CustomerTableRowDetails}
             getDetailPanelHeight={() => "auto"}
           />
 
@@ -120,6 +99,30 @@ function CustomersPage() {
         </Box>
       </Paper>
     </Container>
+  );
+}
+
+interface CustomerTableRowDetailsProps {
+  row: any
+}
+function CustomerTableRowDetails(props: CustomerTableRowDetailsProps) {
+  return (
+      <div>
+        <Card sx={{ margin: 1 }}>
+          <CardContent>
+            <Typography gutterBottom variant="h6" component="div">
+              Email:
+            </Typography>
+            {props.row.email}
+            <Typography variant="h6" component="div">
+              Descriptions:
+            </Typography>
+            <EditableDescriptionList
+                customerId={props.row.id}
+            />
+          </CardContent>
+        </Card>
+      </div>
   );
 }
 

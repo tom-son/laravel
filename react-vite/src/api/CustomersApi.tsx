@@ -6,11 +6,16 @@ class CustomersApi {
   private static async getCustomersFromDB() {
     const result = await requestHandler.get("/customers");
 
-    return result.data.Items;
+    return result.data;
   }
 
   public static async getCustomers(): Promise<Customer[]> {
     return await CustomersApi.getCustomersFromDB()
+  }
+
+  public static async getCustomerRoutes(customerId: number): Promise<any[]> {
+    const response = await requestHandler.get(`/customers/${customerId}/descriptions`);
+    return response.data;
   }
 
   public static async saveCustomer(customer: Customer): Promise<boolean> {

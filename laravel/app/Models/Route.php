@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int          $customer_id
- * @property string       $description
- * @property string       $price
- * @property mixed|string $deleted
+ * @property int    $customer_id
+ * @property string $description
+ * @property string $price
+ * @property int    $deleted
  */
 class Route extends Model
 {

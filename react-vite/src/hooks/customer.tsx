@@ -37,6 +37,16 @@ export function useCustomerDescriptions(customerID: number) {
   return customerQuery;
 }
 
+export function useCustomerRoutes(customerId: number) {
+  const customerRoutesQuery = useQuery({
+    queryKey: [Handlers.CUSTOMER_ROUTES_KEY],
+    queryFn: () => CustomersApi.getCustomerRoutes(customerId),
+    staleTime: 120000,
+  });
+
+  return customerRoutesQuery;
+}
+
 export function useCustomer(customerID: number) {
   const customerQuery = useCustomers(buildSelectCustomer(customerID));
 

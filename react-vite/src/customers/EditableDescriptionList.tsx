@@ -6,17 +6,16 @@ import Description from "../types/Description";
 import AddIcon from '@mui/icons-material/Add';
 import TableRow from "../types/TableRow";
 import CurrencyField from "../components/fields/CurrencyField";
-import CustomerUtility from "../utilities/CustomerUtility";
+import {useCustomerRoutes} from "../hooks/customer.tsx";
 
 interface EditableDescriptionListProps {
-    descriptions: Description[];
-    onSaveDescription: (description: Description) => void;
-    onDeleteDescription: (description: Description) => void;
+    customerId?: number;
 }
 
 function EditableDescriptionList(props: EditableDescriptionListProps)
 {
     const [description, setDescription] = useState<null | TableRow>(null);
+    const customerDescriptions = useCustomerRoutes(props.customerId);
 
     function onAddDescriptionRow() {
         setDescription({
@@ -64,9 +63,8 @@ function EditableDescriptionList(props: EditableDescriptionListProps)
             <List dense={true}>
                 <DescriptionListHeader />
 
-                {props.descriptions
-                    .filter(CustomerUtility.filterDeletedDescription)
-                    .map((description) => (
+                {customerDescriptions.data
+                    ?.map((description) => (
                     <ListItem key={description.id}
                         secondaryAction={
                             <IconButton edge="end" aria-label="delete">

@@ -84,9 +84,9 @@ function CreateCustomerFormDialog(props: CreateCustomerFormDialogProps) {
           />
 
           <EditableDescriptionList
-              descriptions={descriptions}
-              onSaveDescription={addDescriptionRow}
-              onDeleteDescription={removeDescriptionRow}
+              // descriptions={descriptions}
+              // onSaveDescription={addDescriptionRow}
+              // onDeleteDescription={removeDescriptionRow}
           />
         </Stack>
       </DialogContent>
