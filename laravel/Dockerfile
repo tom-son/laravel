@@ -3,6 +3,7 @@ FROM --platform=linux/arm64 php:8.3.6-fpm-bullseye
 #COPY --chown=www-data:www-data laravel/ /var/www/html/
 COPY --chown=www-data:www-data . /var/www/html/
 
+# TODO Thompson - follow laravel production deployment guide for extra performance and security
 # TODO Thompson - run compose install in build - exluding vendor?
 RUN php artisan test
 
