@@ -47,4 +47,5 @@ Route::prefix('customers')->group(function() {
 
 Route::prefix('invoices')->group(function() {
     Route::get('/', [InvoiceController::class,'getInvoices']);
+    Route::get('/{invoice_id}', [InvoiceController::class,'getInvoice']);
 });
