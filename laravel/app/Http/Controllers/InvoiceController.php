@@ -11,7 +11,11 @@ class InvoiceController extends Controller
 {
     public function getInvoices(Request $request): JsonResponse
     {
-        return response()->json(Invoice::all());
+        $invoices = Invoice::all();
+        $orders = InvoiceOrder::query()->whereIn('invoiceId', $invoices->pluck('id'))->get();
+        $order_by_invoice_id = $orders->keyBy('invoiceId');
+        $invoices->each(fn ($invoice) => $invoice->orders = $order_by_invoice_id->get($invoice->id, []));
+        return response()->json($invoices);
     }
 
     public function getInvoice(Request $request, int $invoice_id): JsonResponse

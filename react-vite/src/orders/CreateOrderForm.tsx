@@ -3,7 +3,7 @@ import { Box, Button, Grid } from "@mui/material";
 import OrderForm from "./OrderForm";
 import OrderItemFormDialog from "./OrderItemFormDialog";
 import Order from "../types/Order";
-import OrderItem from "../types/OrderItem";
+import OrderItemOld from "../types/OrderItemOld.ts";
 import { useCustomer } from "../hooks/customer";
 import Customer from "../types/Customer";
 import { Status } from "../types/Status";
@@ -38,7 +38,7 @@ function CreateOrderForm(props: CreateOrderFormProps) {
     }
   }, [props.customerID]);
 
-  function addOrderItem(orderItem: OrderItem) {
+  function addOrderItem(orderItem: OrderItemOld) {
     if (!order) {
       return;
     }

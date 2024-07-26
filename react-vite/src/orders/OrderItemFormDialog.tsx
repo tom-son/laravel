@@ -11,7 +11,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import OrderItem from "../types/OrderItem";
+import OrderItemOld from "../types/OrderItemOld.ts";
 import { DatePicker } from "@mui/x-date-pickers";
 import DescriptionSelectionField from "../components/fields/DescriptionSelectionField";
 import moment from "moment";
@@ -20,9 +20,9 @@ import Description from "../types/Description";
 import {formatToCurrency} from "../utilities/formatter";
 
 interface OrderItemFormDialogProps {
-  orderItem?: OrderItem;
+  orderItem?: OrderItemOld;
   onClose: () => void;
-  onDone: (order: OrderItem) => void;
+  onDone: (order: OrderItemOld) => void;
 
   customerID: number;
 }

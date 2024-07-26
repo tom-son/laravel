@@ -1,5 +1,5 @@
 import Order from "../types/Order";
-import OrderItem from "../types/OrderItem";
+import OrderItemOld from "../types/OrderItemOld.ts";
 import { useState } from "react";
 import { useCustomer } from "../hooks/customer";
 import ErrorComponent from "../components/ErrorComponent";
@@ -35,7 +35,7 @@ function OrderFormDialog(props: OrderFormDialogProps) {
     setDialogVisibility(true);
   }
 
-  function onAddOrderItem(orderItem: OrderItem) {
+  function onAddOrderItem(orderItem: OrderItemOld) {
     setEditOrderData({
       ...editOrderData,
       items: [...editOrderData.items, orderItem],
@@ -48,7 +48,7 @@ function OrderFormDialog(props: OrderFormDialogProps) {
     if (event.target.id === "items") {
       setEditOrderData({
         ...editOrderData,
-        items: event.target.value as OrderItem[],
+        items: event.target.value as OrderItemOld[],
       });
     }
 

@@ -1,5 +1,5 @@
 import Order from "../types/Order";
-import OrderItem from "../types/OrderItem";
+import OrderItemOld from "../types/OrderItemOld.ts";
 import requestHandler from "./requestHandler";
 import { Status } from "../types/Status";
 
@@ -30,7 +30,7 @@ class OrdersApi {
 
   public static async updateOrder(
     orderID: string,
-    orderItems: OrderItem[],
+    orderItems: OrderItemOld[],
     status: Status,
   ): Promise<boolean> {
     try {

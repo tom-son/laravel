@@ -17,7 +17,7 @@ import Order from "../types/Order";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import OrderItemFormDialog from "./OrderItemFormDialog";
-import OrderItem from "../types/OrderItem";
+import OrderItemOld from "../types/OrderItemOld.ts";
 import { Status } from "../types/Status";
 
 interface OrderFormProps {
@@ -77,7 +77,7 @@ function OrderForm(props: OrderFormProps) {
     setOrderItemIDSelected(rowID);
   }
 
-  function onUpdateRow(newOrderItem: OrderItem) {
+  function onUpdateRow(newOrderItem: OrderItemOld) {
     const orderItemIndex = props.order.items.findIndex(
       (item) => item.id === orderItemIDSelected,
     );

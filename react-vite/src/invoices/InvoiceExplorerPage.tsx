@@ -16,26 +16,26 @@ import {
   GridRenderCellParams,
 } from "@mui/x-data-grid-pro";
 import { GridRowSelectionModel } from "@mui/x-data-grid/models/gridRowSelectionModel";
-import { useCustomer } from "../hooks/customer";
-import { calculateOrderTotal } from "../utilities/OrderUtilities";
-import { formatDateFull, formatToCurrency } from "../utilities/formatter";
+// import { useCustomer } from "../hooks/customer";
+// import { calculateOrderTotal } from "../utilities/OrderUtilities";
+import { formatDateFull } from "../utilities/formatter";
 import OrderFormDialog from "./OrderFormDialog";
 import Order from "../types/Order";
-import { useOrder, useOrders } from "../hooks/orders";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import GradeIcon from "@mui/icons-material/Grade";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { Status } from "../types/Status";
 import { yellow } from "@mui/material/colors";
+import {useInvoices} from "../hooks/invoice.tsx";
 
-function CustomerName(props: { customerID: number }) {
-  const customerQuery = useCustomer(props.customerID);
-  if (customerQuery.isPending) {
-    return null;
-  }
-
-  return <>{customerQuery?.data.businessName}</>;
-}
+// function CustomerName(props: { customerID: number }) {
+//   const customerQuery = useCustomer(props.customerID);
+//   if (customerQuery.isPending) {
+//     return null;
+//   }
+//
+//   return <>{customerQuery?.data.businessName}</>;
+// }
 
 const columns: GridColDef[] = [
   {
@@ -101,13 +101,14 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field: "customerID",
+    field: "customerId",
     headerName: "Company",
     type: "string",
     flex: 2,
     minWidth: 180,
     renderCell: (params: GridRenderCellParams<any, string>) => {
-      return <CustomerName customerID={params.row.customerID} />;
+      return params.row.customerID;
+      // return <CustomerName customerID={params.row.customerID} />;
     },
   },
   {
@@ -124,31 +125,30 @@ const columns: GridColDef[] = [
     flex: 1.5,
     minWidth: 110,
     maxWidth: 120,
-    valueGetter: (params) => {
-      return calculateOrderTotal(params.row.items);
-    },
-    valueFormatter: (params) => {
-      if (!params.value) {
-        return "";
-      }
-
-      return formatToCurrency(params.value);
-    },
+    // valueGetter: (params) => {
+    //   return calculateOrderTotal(params.row.orders);
+    // },
+    // valueFormatter: (params) => {
+    //   if (!params.value) {
+    //     return "";
+    //   }
+    //
+    //   return formatToCurrency(params.value);
+    // },
   },
 ];
 
 function InvoiceExplorerPage(props: GlobalState) {
-  const ordersQuery = useOrders();
-  const orderQuery = useOrder();
+  const invoicesQuery = useInvoices();
   const [orderSelectionID, setOrderSelectionID] = React.useState<
     string | undefined
   >();
-  const order = ordersQuery.data?.find(
+  const invoiceSelected = invoicesQuery.data?.find(
     (order) => order.id === orderSelectionID,
   );
 
-  const orderSorted = ordersQuery.data
-    ? [...ordersQuery.data].sort((a, b) => {
+  const invoicesSorted = invoicesQuery.data
+    ? [...invoicesQuery.data].sort((a, b) => {
         if (a.date < b.date) {
           return 1;
         } else if (a.date > b.date) {
@@ -170,10 +170,7 @@ function InvoiceExplorerPage(props: GlobalState) {
   }
 
   async function onSaveOrder(newOrder: Order) {
-    // current implementation of save order can only save order items - lazy to recreate new PUT order endpoint since already made PUT orderItems endpoint which works right now
-    orderQuery.updateOrder(newOrder);
-
-    setOrderSelectionID(undefined);
+    console.log('TODO save order', newOrder);
   }
 
   return (
@@ -195,12 +192,12 @@ function InvoiceExplorerPage(props: GlobalState) {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <DataGridPro
-                loading={ordersQuery.isFetching}
+                loading={invoicesQuery.isFetching}
                 slots={{
                   loadingOverlay: LinearProgress,
                 }}
                 autoHeight
-                rows={orderSorted}
+                rows={invoicesSorted}
                 columns={columns}
                 onRowSelectionModelChange={onOrderRowSelection}
                 rowSelectionModel={orderSelectionID}
@@ -210,9 +207,9 @@ function InvoiceExplorerPage(props: GlobalState) {
           </Grid>
         </Box>
 
-        {order && (
+        {invoiceSelected && (
           <OrderFormDialog
-            order={order}
+            order={invoiceSelected}
             onClose={() => setOrderSelectionID(undefined)}
             onSave={onSaveOrder}
           />

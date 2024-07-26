@@ -7,6 +7,7 @@ class Handlers {
   public static readonly CUSTOMER_ROUTES_KEY = "customer_routes";
   public static readonly ORDERS_KEY = "orders";
   public static readonly ORDER_KEY = "order";
+  public static readonly INVOICES_KEY = 'invoices';
 }
 
 export default Handlers;

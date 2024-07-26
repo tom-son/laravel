@@ -1,4 +1,4 @@
-import OrderItem from "./OrderItem";
+import OrderItemOld from "./OrderItemOld.ts";
 import { Status } from "./Status";
 
 interface Order {
@@ -7,7 +7,7 @@ interface Order {
   customerID: number;
   email?: string;
   abn?: string;
-  items: OrderItem[];
+  items: OrderItemOld[];
   date: Date;
   status: Status;
 }

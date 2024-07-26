@@ -1,11 +1,11 @@
 interface OrderItem {
   id: number;
-  date: Date;
-  description: number;
-  rate: number;
-  loadTonnes: number;
-  docketNumber: string;
-  total: number;
+  invoiceId: number;
+  routeId: number;
+  quantity: number;
+  deleted: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export default OrderItem;
