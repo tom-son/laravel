@@ -28,7 +28,11 @@ class CustomerController extends Controller
 
     public function getCustomerRoutes(Request $request, int $customer_id): JsonResponse
     {
-        $customer_routes = Route::query()->where('customer_id', $customer_id)->get();
+        $customer_routes = Route::query()
+            ->where(Route::CUSTOMER_ID_COLUMN, $customer_id)
+            ->whereNull(Route::DELETED_COLUMN)
+            ->orWhere(Route::DELETED_COLUMN, '=' ,0)
+            ->get();
         if ($customer_routes->isEmpty()) {
             return response()->json(['message' => 'No routes found'], 404);
         }

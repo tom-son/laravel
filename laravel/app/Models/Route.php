@@ -19,4 +19,7 @@ class Route extends Model
 
     protected $connection = 'app_database';
     protected $table = self::TABLE;
+
+    const CUSTOMER_ID_COLUMN = 'customer_id';
+    const DELETED_COLUMN = 'deleted';
 }
