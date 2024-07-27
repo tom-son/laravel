@@ -35,4 +35,16 @@ class CustomerController extends Controller
 
         return response()->json($customer_routes);
     }
+
+    public function createCustomerRoute(Request $request): JsonResponse
+    {
+        $route = new Route();
+        $route->customer_id = $request->input('customer_id');
+        $route->description = $request->input('description');
+        $route->price = $request->input('price');
+        $route->deleted = $request->input('deleted');
+        $route->save();
+
+        return response()->json($route);
+    }
 }

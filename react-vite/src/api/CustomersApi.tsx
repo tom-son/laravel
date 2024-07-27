@@ -1,6 +1,7 @@
 import Customer from "../types/Customer";
 import requestHandler from "./requestHandler";
 import Description from "../types/Description";
+import Route from "../types/Route";
 
 class CustomersApi {
   private static async getCustomersFromDB() {
@@ -15,6 +16,11 @@ class CustomersApi {
 
   public static async getCustomerRoutes(customerId: number): Promise<any[]> {
     const response = await requestHandler.get(`/customers/${customerId}/routes`);
+    return response.data;
+  }
+
+  public static async createCustomerRoute(customerId: number, route: Route): Promise<any[]> {
+    const response = await requestHandler.post(`/customers/${customerId}/routes`, route);
     return response.data;
   }
 

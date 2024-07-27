@@ -2,6 +2,7 @@ import Customer from "../types/Customer";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Handlers, { queryClient } from "../api/handlers";
 import CustomersApi from "../api/CustomersApi";
+import Route from "../types/Route";
 
 export function useCustomers(select?: (customers: Customer[]) => any) {
   const customerQuery = useQuery({
@@ -37,16 +38,6 @@ export function useCustomerDescriptions(customerID: number) {
   return customerQuery;
 }
 
-export function useCustomerRoutes(customerId: number) {
-  const customerRoutesQuery = useQuery({
-    queryKey: [Handlers.CUSTOMER_ROUTES_KEY],
-    queryFn: () => CustomersApi.getCustomerRoutes(customerId),
-    staleTime: 120000,
-  });
-
-  return customerRoutesQuery;
-}
-
 export function useCustomer(customerID: number) {
   const customerQuery = useCustomers(buildSelectCustomer(customerID));
 
@@ -63,6 +54,30 @@ export function useCreateCustomer() {
   });
 
   return mutation;
+}
+
+export function useCustomerRoutes(customerId: number) {
+  const customerRoutesQuery = useQuery({
+    queryKey: [Handlers.CUSTOMER_ROUTES_KEY, { customerId }],
+    queryFn: () => CustomersApi.getCustomerRoutes(customerId),
+    staleTime: 120000,
+  });
+
+  return customerRoutesQuery;
+}
+
+export function useCustomerUpdateRoutes(customerId: number) {
+  const mutation = useMutation({
+    mutationFn: (props: { customerId: number, route: Route }) => CustomersApi.createCustomerRoute(props.customerId, props.route),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [Handlers.CUSTOMER_ROUTES_KEY, { customerId }] });
+    },
+  });
+
+  return {
+    create: (customerId: number, route: Route) => mutation.mutate({customerId, route})
+  };
 }
 
 function buildSelectCustomer(customerID: number) {

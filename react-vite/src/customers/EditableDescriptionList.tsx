@@ -6,7 +6,8 @@ import Description from "../types/Description";
 import AddIcon from '@mui/icons-material/Add';
 import TableRow from "../types/TableRow";
 import CurrencyField from "../components/fields/CurrencyField";
-import {useCustomerRoutes} from "../hooks/customer.tsx";
+import {useCustomerRoutes, useCustomerUpdateRoutes} from "../hooks/customer.tsx";
+import Route from "../types/Route.ts";
 
 interface EditableDescriptionListProps {
     customerId: number;
@@ -14,42 +15,42 @@ interface EditableDescriptionListProps {
 
 function EditableDescriptionList(props: EditableDescriptionListProps)
 {
-    const [description, setDescription] = useState<null | TableRow>(null);
-    const customerDescriptions = useCustomerRoutes(props.customerId);
+    const [route, setRoute] = useState<null | TableRow>(null);
+    const customerRoutes = useCustomerRoutes(props.customerId);
+    const customerUpdateRoutes = useCustomerUpdateRoutes(props.customerId);
 
     function onAddDescriptionRow() {
-        setDescription({
-            id: Date.now(),
+        setRoute({
+            customer_id: props.customerId,
             description: null,
             price: null,
-            isDeleted: false,
         });
     }
 
     function onCurrencyChange(value: number | null) {
-        setDescription({
-            ...description,
+        setRoute({
+            ...route,
             price: value
         });
     }
 
     function onDescriptionChange(event: ChangeEvent<HTMLInputElement>) {
-        setDescription({
-            ...description,
+        setRoute({
+            ...route,
             description: event.target.value
         });
     }
 
     async function onSaveDescription() {
-        await props.onSaveDescription(description as Description);
+        customerUpdateRoutes.create(props.customerId, route as Route);
 
-        setDescription(null);
+        setRoute(null);
     }
 
-    const saveButtonDisabled = !description?.description || !description?.price;
+    const saveButtonDisabled = !route?.description || !route?.price;
 
     async function onDeletedDescription(description: Description) {
-        await props.onDeleteDescription(description);
+        // await props.onDeleteDescription(description);
     }
 
     return (
@@ -63,7 +64,7 @@ function EditableDescriptionList(props: EditableDescriptionListProps)
             <List dense={true}>
                 <DescriptionListHeader />
 
-                {customerDescriptions.data
+                {customerRoutes.data
                     ?.map((description) => (
                     <ListItem key={description.id}
                         secondaryAction={
@@ -87,7 +88,7 @@ function EditableDescriptionList(props: EditableDescriptionListProps)
                     </ListItem>
                 ))}
 
-                {description && (
+                {route && (
                     <ListItem>
                         <div style={{
                             display: 'flex',
@@ -101,7 +102,7 @@ function EditableDescriptionList(props: EditableDescriptionListProps)
                                     label="Description"
                                     variant="outlined"
                                     size='small'
-                                    value={description.description || ''}
+                                    value={route.description || ''}
                                     onChange={onDescriptionChange}
                                 />
                             </div>
@@ -109,7 +110,7 @@ function EditableDescriptionList(props: EditableDescriptionListProps)
                                 <CurrencyField
                                     label=""
                                     id="descriptionPrice"
-                                    value={description.price}
+                                    value={route.price}
                                     variant='outlined'
                                     onChange={onCurrencyChange}
                                     width="100px"
