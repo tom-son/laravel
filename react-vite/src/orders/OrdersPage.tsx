@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Container,
   FormControl,
@@ -8,7 +8,7 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import { GlobalState, INVOICES_PAGE_KEY } from "../App";
+import {GlobalState, INVOICES_PAGE_KEY} from "../App";
 import CustomersApi from "../api/CustomersApi";
 import CreateOrderForm from "./CreateOrderForm";
 import Order from "../types/Order";
@@ -16,12 +16,9 @@ import Customer from "../types/Customer";
 import { useOrders } from "../hooks/orders";
 
 function OrdersPage(props: GlobalState) {
-  const ordersQuery = useOrders();
+  const [selectedCustomerId, setSelectedCustomerId] = useState<number>();
 
-  const customerID = useMemo(
-    () => props.selectedCustomerID,
-    [props.selectedCustomerID],
-  );
+  const ordersQuery = useOrders();
 
   const [customers, setCustomers] = useState<Customer[]>([]);
 
@@ -38,15 +35,14 @@ function OrdersPage(props: GlobalState) {
     label: customer.businessName,
   }));
 
-  const { setSelectedCustomerID, setSelectedPageKey } = props;
   const saveOrder = useCallback(
     (order: Order) => {
       ordersQuery.createNewOrder(order);
 
-      setSelectedCustomerID(null);
-      setSelectedPageKey(INVOICES_PAGE_KEY);
+      setSelectedCustomerId(undefined);
+      props.setSelectedPageKey(INVOICES_PAGE_KEY);
     },
-    [ordersQuery, setSelectedCustomerID, setSelectedPageKey],
+    [ordersQuery, setSelectedCustomerId, props],
   );
 
   return (
@@ -60,14 +56,14 @@ function OrdersPage(props: GlobalState) {
           <Select
             labelId="customer-select-label"
             id="customer-select"
-            value={customerID}
+            value={selectedCustomerId}
             onChange={(event) => {
               if (!event.target.value) {
-                props.setSelectedCustomerID(null);
+                setSelectedCustomerId(undefined);
                 return;
               }
 
-              props.setSelectedCustomerID(event.target.value as number);
+              setSelectedCustomerId(event.target.value as number);
             }}
             label="Customer"
           >
@@ -80,8 +76,8 @@ function OrdersPage(props: GlobalState) {
           </Select>
         </FormControl>
 
-        {customerID && (
-          <CreateOrderForm customerID={customerID} saveOrder={saveOrder} />
+        {selectedCustomerId && (
+          <CreateOrderForm customerID={selectedCustomerId} saveOrder={saveOrder} />
         )}
       </Paper>
     </Container>
