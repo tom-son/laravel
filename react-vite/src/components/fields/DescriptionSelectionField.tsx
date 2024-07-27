@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useCustomerDescriptions } from "../../hooks/customer";
+import {useCustomerRoutes} from "../../hooks/customer";
 import Description from "../../types/Description";
 import CustomerUtility from "../../utilities/CustomerUtility";
 
@@ -13,12 +13,12 @@ function DescriptionSelectionField(props: DescriptionSelectionFieldProps) {
   const fieldID = "description-selection-field";
   const fieldLabel = "Description";
 
-  const customerDescriptionsQuery = useCustomerDescriptions(props.customerID);
-  if (!customerDescriptionsQuery.data) {
+  const customerRoutes = useCustomerRoutes(props.customerID);
+  if (!customerRoutes.data) {
     return <>Error: No customer description</>;
   }
 
-  const options = customerDescriptionsQuery.data
+  const options = customerRoutes.data
       .filter(CustomerUtility.filterDeletedDescription)
       .map((option: Description) => (
         <MenuItem key={option.id} value={option.id}>
