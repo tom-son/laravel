@@ -71,6 +71,11 @@ class CustomersApi {
     const response = await requestHandler.delete(`customers/routes/${routeId}`);
     return response.data;
   }
+
+  public static async getCustomer(customerId: number) {
+    const response = await requestHandler.get(`/customers/${customerId}`);
+    return response.data;
+  }
 }
 
 export default CustomersApi;

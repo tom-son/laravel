@@ -38,8 +38,12 @@ export function useCustomerDescriptions(customerID: number) {
   return customerQuery;
 }
 
-export function useCustomer(customerID: number) {
-  const customerQuery = useCustomers(buildSelectCustomer(customerID));
+export function useCustomer(customerId: number) {
+  const customerQuery = useQuery({
+    queryKey: [Handlers.CUSTOMERS_KEY, { customerId }],
+    queryFn: () => CustomersApi.getCustomer(customerId),
+    staleTime: 120000,
+  });
 
   return customerQuery;
 }

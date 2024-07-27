@@ -21,6 +21,16 @@ class CustomerController extends Controller
         return response()->json($customer);
     }
 
+    public function getCustomer(int $customer_id): JsonResponse
+    {
+        $customer = Customer::where('id', $customer_id)->first();
+        if (empty($customer)) {
+            return response()->json(['message' => 'Customer not found'], 404);
+        }
+
+        return response()->json($customer);
+    }
+
     public function getCustomers(Request $request): JsonResponse
     {
         return response()->json(Customer::all());

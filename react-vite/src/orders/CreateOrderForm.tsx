@@ -30,13 +30,13 @@ function CreateOrderForm(props: CreateOrderFormProps) {
   const [order, setOrder] = React.useState<Order | null>(null);
   const [formDialogVisibility, setFormDialogVisibility] = React.useState(false);
 
-  const customerQuery = useCustomer(props.customerID);
+  const customer = useCustomer(props.customerID);
 
   useEffect(() => {
-    if (customerQuery.data) {
-      setOrder(createNewInitialOrder(customerQuery.data));
+    if (customer.data) {
+      setOrder(createNewInitialOrder(customer.data));
     }
-  }, [props.customerID]);
+  }, [customer.data]);
 
   function addOrderItem(orderItem: OrderItemOld) {
     if (!order) {

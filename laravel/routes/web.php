@@ -43,6 +43,7 @@ Route::get('/user', function (Request $request) {
 Route::prefix('customers')->group(function() {
     Route::get('/', [CustomerController::class,'getCustomers']);
     Route::post('/', [CustomerController::class,'createCustomer']);
+    Route::get('/{customer_id}', [CustomerController::class,'getCustomer']);
 
     Route::delete('/routes/{route_id}', [CustomerController::class,'deleteCustomerRoute']);
 
