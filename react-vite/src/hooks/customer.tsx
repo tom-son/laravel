@@ -67,7 +67,7 @@ export function useCustomerRoutes(customerId: number) {
 }
 
 export function useCustomerUpdateRoutes(customerId: number) {
-  const mutation = useMutation({
+  const createMutation = useMutation({
     mutationFn: (props: { customerId: number, route: Route }) => CustomersApi.createCustomerRoute(props.customerId, props.route),
     onSuccess: () => {
       // Invalidate and refetch
@@ -75,8 +75,17 @@ export function useCustomerUpdateRoutes(customerId: number) {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: (props: { routeId: number }) => CustomersApi.deleteCustomerRoute(props.routeId),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [Handlers.CUSTOMER_ROUTES_KEY, { customerId }] });
+    },
+  });
+
   return {
-    create: (customerId: number, route: Route) => mutation.mutate({customerId, route})
+    create: (customerId: number, route: Route) => createMutation.mutate({customerId, route}),
+    delete: (routeId: number) => deleteMutation.mutate({routeId}),
   };
 }
 

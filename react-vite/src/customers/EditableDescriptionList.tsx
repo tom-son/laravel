@@ -2,7 +2,6 @@ import {Box, Button, IconButton, List, ListItem, TextField} from '@mui/material'
 import {ChangeEvent, useState} from 'react';
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import {formatToCurrency} from "../utilities/formatter";
-import Description from "../types/Description";
 import AddIcon from '@mui/icons-material/Add';
 import TableRow from "../types/TableRow";
 import CurrencyField from "../components/fields/CurrencyField";
@@ -47,11 +46,11 @@ function EditableDescriptionList(props: EditableDescriptionListProps)
         setRoute(null);
     }
 
-    const saveButtonDisabled = !route?.description || !route?.price;
-
-    async function onDeletedDescription(description: Description) {
-        // await props.onDeleteDescription(description);
+    function onDeletedDescription(route: Route) {
+        customerUpdateRoutes.delete(route.id);
     }
+
+    const saveButtonDisabled = !route?.description || !route?.price;
 
     return (
         <Box sx={{width: '500px', border: '1px solid #eee', borderRadius: '4px'}}>
@@ -65,11 +64,11 @@ function EditableDescriptionList(props: EditableDescriptionListProps)
                 <DescriptionListHeader />
 
                 {customerRoutes.data
-                    ?.map((description) => (
-                    <ListItem key={description.id}
+                    ?.map((route) => (
+                    <ListItem key={route.id}
                         secondaryAction={
                             <IconButton edge="end" aria-label="delete">
-                                <DeleteIcon onClick={() => onDeletedDescription(description)}/>
+                                <DeleteIcon onClick={() => onDeletedDescription(route)}/>
                             </IconButton>
                         }
                     >
@@ -79,10 +78,10 @@ function EditableDescriptionList(props: EditableDescriptionListProps)
                             <div style={{
                                 width: '270px'
                             }}>
-                                {description.description}
+                                {route.description}
                             </div>
                             <div style={{flexGrow: 2, textAlign: 'right', width: '60px'}}>
-                                {formatToCurrency(description.price)}
+                                {formatToCurrency(route.price)}
                             </div>
                         </div>
                     </ListItem>

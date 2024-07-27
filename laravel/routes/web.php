@@ -44,8 +44,10 @@ Route::prefix('customers')->group(function() {
     Route::get('/', [CustomerController::class,'getCustomers']);
     Route::post('/', [CustomerController::class,'createCustomer']);
 
-    Route::post('/{customer_id}/routes', [CustomerController::class,'createCustomerRoute']);
+    Route::delete('/routes/{route_id}', [CustomerController::class,'deleteCustomerRoute']);
+
     Route::get('/{customer_id}/routes', [CustomerController::class,'getCustomerRoutes']);
+    Route::post('/{customer_id}/routes', [CustomerController::class,'createCustomerRoute']);
 });
 
 Route::prefix('invoices')->group(function() {

@@ -66,6 +66,11 @@ class CustomersApi {
       return false;
     }
   }
+
+  public static async deleteCustomerRoute(routeId: number) {
+    const response = await requestHandler.delete(`customers/routes/${routeId}`);
+    return response.data;
+  }
 }
 
 export default CustomersApi;

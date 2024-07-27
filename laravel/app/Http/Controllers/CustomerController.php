@@ -47,4 +47,17 @@ class CustomerController extends Controller
 
         return response()->json($route);
     }
+
+    public function deleteCustomerRoute(int $route_id): JsonResponse
+    {
+        $route = Route::query()->where('id', $route_id)->first();
+        if (is_null($route)) {
+            return response()->json(['message' => 'Route not found'], 404);
+        }
+
+        $route->deleted = true;
+        $route->save();
+
+        return response()->json(null, 204);
+    }
 }
