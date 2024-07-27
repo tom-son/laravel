@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import Customer from "../types/Customer";
-import CustomersApi from "../api/CustomersApi.tsx";
+import { useCreateCustomer } from "../hooks/customer.tsx";
 
 interface CreateCustomerFormDialogProps {
   onClose: () => void;
@@ -22,6 +22,8 @@ function CreateCustomerFormDialog(props: CreateCustomerFormDialogProps) {
   const [abn, setAbn] = useState("");
   const [email, setEmail] = useState("");
 
+  const customerCreateMutator = useCreateCustomer();
+
   async function onSave() {
     const customer = {
       name,
@@ -29,7 +31,7 @@ function CreateCustomerFormDialog(props: CreateCustomerFormDialogProps) {
       abn,
       email,
     } as Customer;
-    await CustomersApi.createCustomer(customer);
+    customerCreateMutator.mutate(customer);
 
     props.onClose();
   }

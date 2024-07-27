@@ -53,6 +53,18 @@ export function useCustomer(customerID: number) {
   return customerQuery;
 }
 
+export function useCreateCustomer() {
+  const mutation = useMutation({
+    mutationFn: (customer: Customer) => CustomersApi.createCustomer(customer),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [Handlers.CUSTOMERS_KEY] });
+    },
+  });
+
+  return mutation;
+}
+
 function buildSelectCustomer(customerID: number) {
   return (customers: Customer[]) => {
     return customers.find((customer) => customer.id === customerID);
