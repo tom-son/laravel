@@ -9,7 +9,7 @@ import CurrencyField from "../components/fields/CurrencyField";
 import {useCustomerRoutes} from "../hooks/customer.tsx";
 
 interface EditableDescriptionListProps {
-    customerId?: number;
+    customerId: number;
 }
 
 function EditableDescriptionList(props: EditableDescriptionListProps)

@@ -14,7 +14,7 @@ class CustomersApi {
   }
 
   public static async getCustomerRoutes(customerId: number): Promise<any[]> {
-    const response = await requestHandler.get(`/customers/${customerId}/descriptions`);
+    const response = await requestHandler.get(`/customers/${customerId}/routes`);
     return response.data;
   }
 
