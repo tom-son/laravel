@@ -15,7 +15,7 @@ import OrderItemOld from "../types/OrderItemOld.ts";
 import { DatePicker } from "@mui/x-date-pickers";
 import DescriptionSelectionField from "../components/fields/DescriptionSelectionField";
 import moment from "moment";
-import { useCustomerDescriptions } from "../hooks/customer";
+import {useCustomerRoutes} from "../hooks/customer";
 import Description from "../types/Description";
 import {formatToCurrency} from "../utilities/formatter";
 
@@ -47,23 +47,23 @@ function OrderItemFormDialog(props: OrderItemFormDialogProps) {
   );
   const [total, setTotal] = React.useState<number>(props.orderItem?.total || 0);
 
-  const customerDescriptionsQuery = useCustomerDescriptions(props.customerID);
+  const customerRoutes = useCustomerRoutes(props.customerID);
 
   function onDescriptionFieldChange(id: number) {
     setDescriptionID(id);
 
-    const descriptionOption = customerDescriptionsQuery.data.find(
+    const routeOption = customerRoutes.data?.find(
       (option: Description) => option.id === id,
     );
-    if (descriptionOption === undefined) {
-      console.error("Error: description not found for id: " + id);
+    if (routeOption === undefined) {
+      console.error("Error: route not found for id: " + id);
       return;
     }
 
-    setRate(descriptionOption.price);
+    setRate(routeOption.price);
 
     if (typeof loadTonnes === "number") {
-      setTotal(calculateOrderItemTotal(descriptionOption.price, loadTonnes));
+      setTotal(calculateOrderItemTotal(routeOption.price, loadTonnes));
     }
   }
 

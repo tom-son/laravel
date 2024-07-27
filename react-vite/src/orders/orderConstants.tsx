@@ -1,6 +1,6 @@
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { formatDateFull, formatToCurrency } from "../utilities/formatter";
-import { useCustomerDescriptions } from "../hooks/customer";
+import {useCustomerDescriptions, useCustomerRoutes} from "../hooks/customer";
 import Description from "../types/Description";
 import ErrorComponent from "../components/ErrorComponent";
 
@@ -8,8 +8,8 @@ function CustomerDescription(props: {
   customerID: number;
   descriptionID: number;
 }) {
-  const descriptionsQuery = useCustomerDescriptions(props.customerID);
-  const descriptionOption = descriptionsQuery.data.find(
+  const customerRoutes = useCustomerRoutes(props.customerID);
+  const descriptionOption = customerRoutes.data?.find(
     (description: Description) => description?.id === props.descriptionID,
   );
   if (!descriptionOption) {
