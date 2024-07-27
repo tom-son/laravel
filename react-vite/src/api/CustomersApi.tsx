@@ -18,6 +18,11 @@ class CustomersApi {
     return response.data;
   }
 
+  public static async createCustomer(customer: Customer): Promise<any> {
+    const response = await requestHandler.post("/customers", customer);
+    return response.data;
+  }
+
   public static async saveCustomer(customer: Customer): Promise<boolean> {
     await requestHandler.post("/customers", customer).catch(() => {
       return false;

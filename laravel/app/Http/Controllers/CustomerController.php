@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    public function createCustomer(Request $request): JsonResponse
+    {
+        $customer = new Customer();
+        $customer->name = $request->input('name');
+        $customer->businessName = $request->input('name');
+        $customer->abn = $request->input('abn');
+        $customer->email = $request->input('email');
+        $customer->save();
+
+        return response()->json($customer);
+    }
+
     public function getCustomers(Request $request): JsonResponse
     {
         return response()->json(Customer::all());

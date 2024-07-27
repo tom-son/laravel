@@ -9,8 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import Customer from "../types/Customer";
-import Description from "../types/Description";
-import EditableDescriptionList from "./EditableDescriptionList";
+import CustomersApi from "../api/CustomersApi.tsx";
 
 interface CreateCustomerFormDialogProps {
   onClose: () => void;
@@ -22,31 +21,17 @@ function CreateCustomerFormDialog(props: CreateCustomerFormDialogProps) {
   const [businessName, setBusinessName] = useState("");
   const [abn, setAbn] = useState("");
   const [email, setEmail] = useState("");
-  const [descriptions, setDescriptions] = useState<Description[]>([]);
 
-  function onSave() {
-    props.onAdd({
-      id: Date.now(),
+  async function onSave() {
+    const customer = {
       name,
       businessName,
-      descriptions,
       abn,
       email,
-    });
+    } as Customer;
+    await CustomersApi.createCustomer(customer);
 
     props.onClose();
-  }
-
-  function addDescriptionRow(description: Description) {
-    setDescriptions([
-      ...descriptions,
-      description
-    ]);
-  }
-
-  function removeDescriptionRow(descriptionToRemove: Description) {
-    const newDescription = [...descriptions].filter(description => description.id !== descriptionToRemove.id);
-    setDescriptions(newDescription);
   }
 
   return (
@@ -81,12 +66,6 @@ function CreateCustomerFormDialog(props: CreateCustomerFormDialogProps) {
             margin="dense"
             onChange={(event) => setEmail(event.target.value)}
             value={email}
-          />
-
-          <EditableDescriptionList
-              // descriptions={descriptions}
-              // onSaveDescription={addDescriptionRow}
-              // onDeleteDescription={removeDescriptionRow}
           />
         </Stack>
       </DialogContent>

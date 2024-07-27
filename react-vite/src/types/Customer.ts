@@ -6,6 +6,8 @@ interface Customer {
   businessName: string;
   abn?: string;
   email?: string;
+  routes: any[];
+  // TODO delete in favour for routes
   descriptions?: Description[];
 }
 
